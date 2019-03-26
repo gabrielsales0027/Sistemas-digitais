@@ -1,0 +1,25 @@
+entity textbench is
+end textbench;
+
+architecture test of textbench is
+
+component geradorparidade is
+generic (n: in integer := 5);
+port(input: in bit_vector(n-1 downto 0);
+	  output: out bit);
+end component;
+
+signal n: integer := 5;
+signal a: bit_vector(n-1 downto 0);
+signal b: bit;
+
+begin
+x: geradorparidade port map(a,b);
+a <= "00000",
+		"01110" after 10 ns,
+		"11110" after 20 ns,
+		"01110" after 30 ns,
+		"10110" after 40 ns,
+		"00110" after 50 ns,
+		"11100" after 60 ns;
+end test;
