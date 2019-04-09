@@ -15,7 +15,7 @@ component modulo is
 	port(a,b:in std_logic_vector(3 downto 0);
 	     cin : in std_logic;
 	    c : out std_logic_vector(3 downto 0);
-		 P :out std_logic_vector(3 downto 0));
+		 Ps :out std_logic_vector(3 downto 0));
 end component;
 
 signal P: std_logic_vector(3 downto 0);
