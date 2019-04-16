@@ -6,7 +6,7 @@ end textbench;
 
 architecture test of textbench is
 
-component sub1b is
+component subnbits is
 port(A,B : in std_logic_vector(3 downto 0);
 	  M: in std_logic;
 	  cout: out std_logic;
@@ -18,7 +18,7 @@ signal m,cout : std_logic;
 
 begin
 
-test : sub1b port map(a,b,m,cout,s);
+test : subnbits port map(a,b,m,cout,s);
 
 a <= "1111",
 		"0011" after 10 ns,
