@@ -1,43 +1,49 @@
-%IFPB 
-%EQUAÇÕES TRANSCENDENTES E ALGÉBRICAS
-%CALCULO DE RAIZES - METODO DA BISSEÇÃO
-clear all, close all, clc, help raizes.m
-a=-1;b=5; N=5000; h=(b-a)/N; tol=1e-3;x=a:h:b;
-fxy='(exp(x)-exp(-x))/(exp(x)+exp(-x))';y=fun(fxy,x);
-set(gcf,'Position', [1 29 800 504], 'Color', [1 1 1]);
- set (axes,'NextP)lot', 'Add', 'XGrid', 'On', 'YGrid', 'On',
-'GridLineStyle', '-','FontName', 'Arial', 'FontSize', 12,
-'FontWeight', 'Blod', 'Ylim', [-2 2], 'XLim', [a-1 b+1]);
-p=plot(x,y,'r');set(p,'LineWidht', 3);
-q(1)=xlabel('x');q(2)=ylabel('y(x)');q(3)=title('METODO DA
-BISSEÇAO');
-q(4)=legend(['TOLERANCIA =', num2str(tol)]);
-set(q, 'FontName', 'TimeNewRoma',
-'FontSize',12,'FontWeight','Bold')
-%METODO DA BISSEÇÃO
-n=1;e(n)=b-a;
-while(e(n)>tol)
- ya=fun(fxy,a);yb=fun(fxy,b);
- xi(n)=a+(b-a)/2;yi(n)=fun(fxy,xi(n));
- p=plot([a a],[0 ya],'b');set(p,'LineWidht',2);
- p=plot([b b],[0 yb],'b');set(p,'LineWidht',2);
- p=plot([xi(n) xi(n)], [0 yi(n)],'b');set(p,'LineWidht',2);
- if(yi(n)==0), break; end
- if(ya*ti(n)<0)
- b=xi(n);
- else
- a=xi(n);
- end
- n=n+1;e(n)=b-a;
+%IFPB - 09/10/18
+%EUQAÇÕES TRANSCENDENTES E ALGÉBRICAS
+%CALCULO DE RAÍZES - ETODO DE NEWTON
+%TESTE DE LABORATORIO
+clear all, close all, clc
+TOL=1E-9; N=1000;
+%12 SETS
+exe='EXERCICIO 1'; fxy = 'x.^3+2*x.^2-3*x-10'; gxy='3*x.^2+4*x3'; a=-5;b=6;x(1)=-3;raiz=2;
+%exe='EXERCICIO 2'; fxy='2.*x.^3+log(x)-
+5';gxy='6.*x.^2+1./x';a=1;b=2;raiz=1.33084;x(1)=b;
+%exe='EXERCICIO 3'; fxy=x.^3-5.*x^2+x+3';gxy='3.*x.^2-
+10.*x+1';a=-2.44;b=-0.38;x(1)=a;raiz=-0.064575;
+%exe='EXERCICIO 4'; fxy='2.*x-sin(X)+4';gxy='2-cos(x)';a=-
+5;b=0;x(!)=b;raiz=2.3542;
+%exe='EXERCICIO 5'; fxy='exp(x)-tan(x)';gxy='exp(x)-
+sec(x).^2';a=1;b=1.55;x(1)=b;raiz=1.3063
+%exe='EXERCICIO 6'; fxy='10.^x+x.^3+2';
+gxy='(10.^x).*log(10)+3.*x.^2';a=-5;b=2.5;x(1)=a;raiz=-1.2711
+%METODO DE NEWTON
+n=1;e(1)=0;CP=1;
+while(CP>TOL & n<=N)
+ n=n+1;
+ x(n)=x(n-1)-fun(fxy,x(n-1))/fun(gxy,x(n-1));
+ e(n)=abs(x(n)-x(n-1));CP=e(n);
 end
-txt=text(3,0.7,num2str([xi']))
-set(txt,'FontName','Arial'
-,'FontSize',7,'FontWeight','Bold','HorizontalAlignment',
-'right','VerticalAlignment', 'top')
-18
-txt=text(4,0.7,num2str([e']))
-set(txt,'FontName','Arial',
-'FontSize',7,'FontWeight','Bold','HorizontalAlignment',
-'right','VerticalAlignment', 'top')
-function y = fun(fxy, x)
-y = eval(fxy);
+X=[(0:lenght(x)-1),x,e];[s,t]=size(X); tab=[' TABELA:' exe];
+disp(tab),disp(' -----------------'), disp(X)
+disp([' TOL=' num2str(TOL)]);
+disp([' ITERAÇÕES GASTAS:' num2str(n-1)])
+disp(' -----------------')
+h=(b-a)/N;xg=a:h:b;yg=fun(fxy,xg);
+ymin=floor(min(yg)/10)*10; ymax=ceil(mas(yg)/10)*10;
+set(gcf,'Color',[1 1 1])
+21
+set(axes,'Nextplot', 'Add', 'GridLineStyle', '-', 'Xgrid', 'On',
+'Ygrid', 'On', 'YLimMode', 'Manual', 'Ylim', [ymin ymax],
+'Fontsize', 12, 'FontWeight' , 'Bold');
+graf=plot(xg,yg,'k');set(graf,'Linewidht',2);
+graf1=plot(x(n),0,'ko');set(graf1, 'Linewidht',3);
+for j=1:n-1
+ traj=line([x(j) x(j)],[0
+fun(fxy,x(j))]);set(traj,'LineWidht',2,'LineStyle', '-');
+ traj=line([x(j) x(j+1)],[fun(fxy, x(j)) 0]);set(traj,
+'LineWidht', 2,'LineStyle', '-');
+end
+str=['f(x)=' fxy];str1=['raiz=' num2str(x(n))];
+legend(str, str1, 0), xlabel('(x)'),ylabel('f(x)'), title(exe)
+%function y=fun(xy,x)
+%y=eval(fxy);
