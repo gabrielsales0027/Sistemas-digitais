@@ -1,4 +1,4 @@
-%IFPB - 09/10/18
+%IFPB 
 %EQUAÇÕES TRANSCENDENTES E ALGÉBRICAS
 %CALCULO DE RAIZES - METODO DA BISSEÇÃO
 clear all, close all, clc, help raizes.m
