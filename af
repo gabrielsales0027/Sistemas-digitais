@@ -1,0 +1,43 @@
+%IFPB - 09/10/18
+%EQUAÇÕES TRANSCENDENTES E ALGÉBRICAS
+%CALCULO DE RAIZES - METODO DA BISSEÇÃO
+clear all, close all, clc, help raizes.m
+a=-1;b=5; N=5000; h=(b-a)/N; tol=1e-3;x=a:h:b;
+fxy='(exp(x)-exp(-x))/(exp(x)+exp(-x))';y=fun(fxy,x);
+set(gcf,'Position', [1 29 800 504], 'Color', [1 1 1]);
+ set (axes,'NextP)lot', 'Add', 'XGrid', 'On', 'YGrid', 'On',
+'GridLineStyle', '-','FontName', 'Arial', 'FontSize', 12,
+'FontWeight', 'Blod', 'Ylim', [-2 2], 'XLim', [a-1 b+1]);
+p=plot(x,y,'r');set(p,'LineWidht', 3);
+q(1)=xlabel('x');q(2)=ylabel('y(x)');q(3)=title('METODO DA
+BISSEÇAO');
+q(4)=legend(['TOLERANCIA =', num2str(tol)]);
+set(q, 'FontName', 'TimeNewRoma',
+'FontSize',12,'FontWeight','Bold')
+%METODO DA BISSEÇÃO
+n=1;e(n)=b-a;
+while(e(n)>tol)
+ ya=fun(fxy,a);yb=fun(fxy,b);
+ xi(n)=a+(b-a)/2;yi(n)=fun(fxy,xi(n));
+ p=plot([a a],[0 ya],'b');set(p,'LineWidht',2);
+ p=plot([b b],[0 yb],'b');set(p,'LineWidht',2);
+ p=plot([xi(n) xi(n)], [0 yi(n)],'b');set(p,'LineWidht',2);
+ if(yi(n)==0), break; end
+ if(ya*ti(n)<0)
+ b=xi(n);
+ else
+ a=xi(n);
+ end
+ n=n+1;e(n)=b-a;
+end
+txt=text(3,0.7,num2str([xi']))
+set(txt,'FontName','Arial'
+,'FontSize',7,'FontWeight','Bold','HorizontalAlignment',
+'right','VerticalAlignment', 'top')
+18
+txt=text(4,0.7,num2str([e']))
+set(txt,'FontName','Arial',
+'FontSize',7,'FontWeight','Bold','HorizontalAlignment',
+'right','VerticalAlignment', 'top')
+function y = fun(fxy, x)
+y = eval(fxy);
