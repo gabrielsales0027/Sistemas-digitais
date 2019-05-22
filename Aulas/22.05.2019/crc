@@ -1,1 +1,73 @@
 
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity crcx2 is
+port(ser_in,clk:in std_logic;
+	  reset: in std_logic;
+	  crc_out: out std_logic_vector(1 downto 0));
+end crcx2;
+
+architecture arq of crcx2 is
+signal crc: std_logic_vector(1 downto 0) := "00";
+
+begin
+
+crc_out <= crc;
+
+process(clk,reset)
+begin
+if(reset = '1') then
+	crc <= "00";
+elsif( clk'event and clk ='0') then
+		crc(0) <= ser_in xor crc(1);
+		crc(1) <= crc(0);
+
+end if;
+end process;
+end arq;
+
+----------------------------------------------------------------
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity testbench is
+end testbench;
+
+architecture arq of testbench is
+
+component crcx2 is
+port(ser_in,clk:in std_logic;
+	  reset: in std_logic;
+	  crc_out: out std_logic_vector(1 downto 0));
+end component;
+
+signal ser_in: std_logic := '0';
+signal reset: std_logic := '0';
+signal clk: std_logic := '1';
+signal crc_out: std_logic_vector(1 downto 0) := "00";
+signal data : std_logic_vector(7 downto 0) :="11010100";
+
+begin
+
+test: crcx2 port map (ser_in,clk,reset,crc_out);
+
+process
+begin
+reset <='1';
+wait for 10 ns;
+reset <='0';
+
+for i in 7 downto 0 loop
+
+clk <='1';
+ser_in <= data(i);
+wait for 20 ns;
+clk <='0';
+wait for 20 ns;
+
+end loop;
+wait;
+end process;
+end arq;
