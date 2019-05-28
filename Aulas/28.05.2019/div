@@ -41,7 +41,7 @@ resultado <= acc;
 process( reset,clk)
 
 begin 
-if (reset = '0') then 
+if (reset = '1') then 
 	status <= '0';
 	w <= a;
 	x <= b;
