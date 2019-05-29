@@ -33,7 +33,7 @@ signal cout: std_logic;
 begin
 
 Resultado <= temp_res;
-
+Resto <= a_m(size-1 downto 0);
 sub: subtrator port map(a_m,b_m,temp_a_m,'1',cout);
 
 process(reset,clk)
@@ -51,7 +51,7 @@ cont := 0;
 -- zerar contador
 
 elsif(clk'event and clk = '0') then
-if(cont = size) then
+if(cont = size+1) then
 ready <= '1';
 else
 cont := cont +1;
@@ -71,7 +71,6 @@ end process;
 
 
 end arq;
-
 ----------------------------------------------------------
 --subtrator
 
@@ -135,3 +134,48 @@ cout <= (a and b) or (cin and temp);
 s <= cin xor temp;
 
 end add1b;
+-----------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity testbench is
+end testbench;
+
+architecture arq of testbench is
+
+component divisor is
+generic(size :integer :=4);
+port(a,b:in std_logic_vector(size-1 downto 0);
+	  clk,reset: in std_logic;
+	  Resto,Resultado: out std_logic_vector(size-1 downto 0);
+	  Ready: out std_logic);
+end component;
+
+signal ready: std_logic :='1' ;
+signal reset: std_logic := '0';
+signal clk: std_logic := '0';
+signal a: std_logic_vector(3 downto 0) :="1010";
+signal b: std_logic_vector(3 downto 0) :="0101";
+signal Resto,Resultado :std_logic_vector(3 downto 0);
+
+begin
+
+test: divisor port map (a,b,clk,reset,Resto,Resultado,ready);
+
+process
+begin
+wait for 10 ns;
+reset <='1';
+wait for 10 ns;
+reset <='0';
+
+for i in 0 to 10 loop
+clk <= '1';
+wait for 100 ns;
+clk <= '0';
+wait for 100 ns;
+end loop;
+
+wait;
+end process;
+end arq;
